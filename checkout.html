@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>سلة الشراء - متجر عُزلة</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header"><h1>متجر عُزلة</h1><nav class="main-nav"><a href="index.html">الرئيسية</a></nav></header>
+<main class="section">
+  <h2>سلة الشراء</h2>
+  <div id="cart-list"></div>
+  <div id="cart-summary"></div>
+  <div id="checkout-actions">
+  <h3>اختر طريقة الدفع</h3>
+  <label><input type="radio" name="paymethod" value="card" checked> بطاقة/بوابة دفع إلكترونية</label><br>
+  <label><input type="radio" name="paymethod" value="bank"> تحويل بنكي</label><br>
+  <label><input type="radio" name="paymethod" value="wallet"> محفظة إلكترونية</label><br>
+
+  <div id="gateway-section" class="pay-section">
+    <p>سيتم تحويلك لبوابة الدفع (محاكاة). ادخل بياناتك ثم اضغط "الدفع الآن".</p>
+  </div>
+
+  <div id="bank-section" class="pay-section" style="display:none">
+    <h4>تفاصيل التحويل البنكي</h4>
+    <div id="merchant-bank-info" class="review-card">
+      <p><strong>اسم البنك:</strong> <span id="m-bank">اسم البنك</span></p>
+      <p><strong>اسم الحساب:</strong> <span id="m-account-name">اسم الحساب</span></p>
+      <p><strong>رقم الحساب / IBAN:</strong> <span id="m-iban">0000 0000 0000 0000</span></p>
+    </div>
+    <p>بعد التحويل، أدخل رقم الإيصال/المرجع وسيتم تأكيد الدفع يدويًا.</p>
+    <label>رقم الإيصال/المرجع: <input id="bank-ref" type="text"></label><br>
+    <button id="bank-pay" class="btn">أرسلت التحويل - أبلغنا</button>
+  </div>
+
+  <div id="wallet-section" class="pay-section" style="display:none">
+    <h4>المحافظ الإلكترونية المدعومة</h4>
+    <div id="merchant-wallets" class="review-card">
+      <p><strong>STC Pay:</strong> <span id="m-stc">+971 50 000 0000</span></p>
+      <p><strong>PayPal:</strong> <span id="m-paypal">merchant@example.com</span></p>
+      <p><strong>Other Wallet:</strong> <span id="m-other">رقم/معرف المحفظة</span></p>
+    </div>
+    <label>أدخل مرجع العملية: <input id="wallet-ref" type="text"></label><br>
+    <button id="wallet-pay" class="btn">أرسلت المبلغ - أبلغنا</button>
+  </div>
+
+  <hr>
+  <div id="order-confirm"></div>
+
+    <h3>معلومات الدفع</h3>
+    <label>الاسم: <input id="cust-name" type="text"></label><br>
+    <label>البريد الإلكتروني: <input id="cust-email" type="email"></label><br>
+    <button id="pay-btn" class="btn">الدفع الآن (وهمي)</button>
+  </div>
+  <div id="payment-result"></div>
+</main>
+<footer class="site-footer"><p>© 2025 متجر عُزلة</p></footer>
+<script src="assets/store.js"></script>
+<script>
+function renderCart(){
+  const cart = getCart();
+  const list = document.getElementById('cart-list');
+  list.innerHTML = '';
+  if(cart.items.length===0){ list.innerHTML='<p>السلة فارغة.</p>'; document.getElementById('cart-summary').innerHTML=''; return; }
+  cart.items.forEach(it=>{
+    const div = document.createElement('div');
+    div.className='review-card';
+    div.innerHTML = `<strong>${it.name}</strong> - ${it.qty} × ${it.price} ${it.currency} <button data-slug="${it.slug}" class="remove">حذف</button>`;
+    list.appendChild(div);
+  });
+  document.querySelectorAll('.remove').forEach(b=>b.addEventListener('click',e=>{ removeFromCart(e.target.dataset.slug); renderCart(); }));
+  document.getElementById('cart-summary').innerHTML = `<p>المجموع: ${cart.total} ${cart.currency}</p>`;
+}
+document.getElementById('pay-btn').addEventListener('click', ()=>{
+  const name = document.getElementById('cust-name').value || 'مشتري';
+  const email = document.getElementById('cust-email').value || 'no@show.now';
+  document.getElementById('payment-result').innerHTML = '<p>جاري معالجة الدفع...</p>';
+  setTimeout(()=>{
+    clearCart();
+    renderCart();
+    document.getElementById('payment-result').innerHTML = `<p>تمت عملية الدفع بنجاح. تم إرسال إيصال إلى ${email}</p>`;
+  },1500);
+});
+renderCart();
+</script>
+
+<script>
+// Payment UI logic
+function showPaySection(method){
+  document.querySelectorAll('.pay-section').forEach(s => s.style.display = 'none');
+  if(method === 'card') document.getElementById('gateway-section').style.display = 'block';
+  if(method === 'bank') document.getElementById('bank-section').style.display = 'block';
+  if(method === 'wallet') document.getElementById('wallet-section').style.display = 'block';
+}
+
+document.querySelectorAll('input[name="paymethod"]').forEach(r => {
+  r.addEventListener('change', e => showPaySection(e.target.value));
+});
+
+// Load merchant account info from localStorage (admin can set)
+function loadMerchantInfo(){
+  const info = JSON.parse(localStorage.getItem('ozluh_merchant') || '{}');
+  document.getElementById('m-bank').textContent = info.bankName || 'اسم البنك';
+  document.getElementById('m-account-name').textContent = info.accountName || 'اسم الحساب';
+  document.getElementById('m-iban').textContent = info.iban || '0000 0000 0000 0000';
+  document.getElementById('m-stc').textContent = info.stc || '+971 50 000 0000';
+  document.getElementById('m-paypal').textContent = info.paypal || 'merchant@example.com';
+  document.getElementById('m-other').textContent = info.other || 'رقم/معرف المحفظة';
+}
+loadMerchantInfo();
+
+// Buttons actions
+document.getElementById('bank-pay').addEventListener('click', ()=>{
+  const ref = document.getElementById('bank-ref').value.trim();
+  if(!ref){ alert('من فضلك أدخل رقم الإيصال/المرجع'); return; }
+  const cart = getCart();
+  const order = {id: Date.now(), items: cart.items, total: cart.total, method: 'bank', ref: ref, status: 'pending'};
+  let orders = JSON.parse(localStorage.getItem('ozluh_orders')||'[]');
+  orders.push(order); localStorage.setItem('ozluh_orders', JSON.stringify(orders));
+  clearCart();
+  document.getElementById('order-confirm').innerHTML = `<p>تم تسجيل طلبك. سنقوم بمراجعة التحويل وتأكيد الطلب خلال 24 ساعة. مرجع الطلب: ${order.id}</p>`;
+});
+
+document.getElementById('wallet-pay').addEventListener('click', ()=>{
+  const ref = document.getElementById('wallet-ref').value.trim();
+  if(!ref){ alert('من فضلك أدخل مرجع العملية'); return; }
+  const cart = getCart();
+  const order = {id: Date.now(), items: cart.items, total: cart.total, method: 'wallet', ref: ref, status: 'pending'};
+  let orders = JSON.parse(localStorage.getItem('ozluh_orders')||'[]');
+  orders.push(order); localStorage.setItem('ozluh_orders', JSON.stringify(orders));
+  clearCart();
+  document.getElementById('order-confirm').innerHTML = `<p>تم تسجيل طلبك. سنقوم بمراجعة الدفع وتأكيد الطلب خلال 24 ساعة. مرجع الطلب: ${order.id}</p>`;
+});
+
+// Simulate gateway payment (mock)
+document.getElementById('pay-btn').addEventListener('click', ()=>{
+  const name = document.getElementById('cust-name').value || 'مشتري';
+  const email = document.getElementById('cust-email').value || 'no@show.now';
+  document.getElementById('payment-result').innerHTML = '<p>جارٍ معالجة الدفع عبر بوابة الدفع...</p>';
+  setTimeout(()=>{
+    const cart = getCart();
+    const order = {id: Date.now(), items: cart.items, total: cart.total, method: 'gateway', ref: 'GATE-'+Date.now(), status: 'paid'};
+    let orders = JSON.parse(localStorage.getItem('ozluh_orders')||'[]');
+    orders.push(order); localStorage.setItem('ozluh_orders', JSON.stringify(orders));
+    clearCart();
+    renderCart();
+    document.getElementById('payment-result').innerHTML = `<p>تمت عملية الدفع بنجاح. تم إرسال إيصال إلى ${email}. مرجع الدفع: ${order.ref}</p>`;
+  },1500);
+});
+
+// Admin helper: open small prompt to set merchant info (only local)
+function setMerchantInfo(){
+  const bankName = prompt('ادخل اسم البنك (Merchant)', localStorage.getItem('ozluh_merchant') && JSON.parse(localStorage.getItem('ozluh_merchant')).bankName || '');
+  const accountName = prompt('ادخل اسم الحساب', localStorage.getItem('ozluh_merchant') && JSON.parse(localStorage.getItem('ozluh_merchant')).accountName || '');
+  const iban = prompt('ادخل رقم الحساب / IBAN', localStorage.getItem('ozluh_merchant') && JSON.parse(localStorage.getItem('ozluh_merchant')).iban || '');
+  const stc = prompt('ادخل STC Pay رقم أو اتصال', localStorage.getItem('ozluh_merchant') && JSON.parse(localStorage.getItem('ozluh_merchant')).stc || '');
+  const paypal = prompt('ادخل PayPal email', localStorage.getItem('ozluh_merchant') && JSON.parse(localStorage.getItem('ozluh_merchant')).paypal || '');
+  const other = prompt('ادخل محفظة بديلة أو معرف', localStorage.getItem('ozluh_merchant') && JSON.parse(localStorage.getItem('ozluh_merchant')).other || '');
+  const info = {bankName, accountName, iban, stc, paypal, other};
+  localStorage.setItem('ozluh_merchant', JSON.stringify(info));
+  loadMerchantInfo();
+  alert('تم حفظ معلومات الحساب المحلية (محلياً فقط).');
+}
+
+// expose admin function globally
+window.setMerchantInfo = setMerchantInfo;
+</script>
+
+</body>
+</html>

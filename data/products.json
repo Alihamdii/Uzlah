@@ -1,0 +1,112 @@
+[
+  {
+    "slug": "prod-1",
+    "name": "سماعة بلوتوث محمولة — مدل A1",
+    "description": "سماعة بلوتوث محمولة صغيرة بقوة صوتية ممتازة وبطارية تدوم حتى 24 ساعة.",
+    "price": 129,
+    "old_price": 179,
+    "currency": "درهم",
+    "image": "https://m.media-amazon.com/images/I/71xq8FxQ+FL._AC_SL1500_.jpg",
+    "category": "product",
+    "reviews": [{"author": "عميل", "text": "منتج جيد ويستحق الشراء."}]
+  },
+  {
+    "slug": "prod-2",
+    "name": "باور بانك سريع 20000mAh — ChargeMax",
+    "description": "باور بانك بسعة 20000mAh يدعم الشحن السريع ومنفذين USB.",
+    "price": 99,
+    "old_price": 139,
+    "currency": "درهم",
+    "image": "https://m.media-amazon.com/images/I/61D8h3mUfDL._AC_SL1500_.jpg",
+    "category": "product",
+    "reviews": [{"author": "عميل", "text": "منتج جيد ويستحق الشراء."}]
+  },
+  {
+    "slug": "prod-3",
+    "name": "سماعات أذن لاسلكية TWS — QuietPods",
+    "description": "سماعات داخل الأذن بتقنية إلغاء الضوضاء وتصميم مريح للارتداء الطويل.",
+    "price": 149,
+    "old_price": 199,
+    "currency": "درهم",
+    "image": "https://m.media-amazon.com/images/I/71LDKz+u8QL._AC_SL1500_.jpg",
+    "category": "product",
+    "reviews": [{"author": "عميل", "text": "منتج جيد ويستحق الشراء."}]
+  },
+  {
+    "slug": "prod-4",
+    "name": "مصباح ذكي LED قابل للتعديل — LightEase",
+    "description": "مصباح ذكي بتطبيق تحكم وتبديل الألوان ووضعيات الإضاءة للقراءة والاسترخاء.",
+    "price": 79,
+    "old_price": 119,
+    "currency": "درهم",
+    "image": "https://m.media-amazon.com/images/I/61j8L7X1D+L._AC_SL1500_.jpg",
+    "category": "product",
+    "reviews": [{"author": "عميل", "text": "منتج جيد ويستحق الشراء."}]
+  },
+  {
+    "slug": "prod-5",
+    "name": "قلم رقمي للتابلت — SketchPro",
+    "description": "قلم حساس للكتابة والرسم بدقة عالية ومتوافق مع أغلب الأجهزة.",
+    "price": 199,
+    "old_price": 249,
+    "currency": "درهم",
+    "image": "https://m.media-amazon.com/images/I/61rI6zmEoFL._AC_SL1500_.jpg",
+    "category": "product",
+    "reviews": [{"author": "عميل", "text": "منتج جيد ويستحق الشراء."}]
+  },
+  {
+    "slug": "prod-6",
+    "name": "Samsung Galaxy Watch 6",
+    "description": "ساعة ذكية أنيقة من سامسونج بشاشة AMOLED، مقاسات متعددة، بطارية تدوم حتى 40 ساعة، مقاومة للماء IP68.",
+    "price": 1299,
+    "old_price": 1499,
+    "currency": "درهم",
+    "image": "https://images.samsung.com/is/image/samsung/p6pim/ae/sm-r930nzaamea/gallery/ae-galaxy-watch6-40mm-sm-r930nzaamea-538838128?$650_519_PNG$",
+    "category": "product",
+    "reviews": [{"author": "عميل", "text": "ساعة ممتازة وعملية للغاية."}]
+  },
+  {
+    "slug": "prod-7",
+    "name": "Google Pixel Watch 3",
+    "description": "ساعة Google الذكية الأحدث بنظام Wear OS 5، شاشة OLED ساطعة، وتكامل مثالي مع Google وFitbit.",
+    "price": 1399,
+    "old_price": 1599,
+    "currency": "درهم",
+    "image": "https://store.google.com/product/images/pixel_watch_3_black.png",
+    "category": "product",
+    "reviews": [{"author": "عميل", "text": "جميلة ومليئة بالمميزات."}]
+  },
+  {
+    "slug": "prod-8",
+    "name": "Apple Watch Series 10",
+    "description": "أحدث ساعات آبل بتصميم أنحف وشاشة أكبر بنسبة 30%، مع بطارية تدوم طوال اليوم.",
+    "price": 1699,
+    "old_price": 1899,
+    "currency": "درهم",
+    "image": "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/watch-series-10",
+    "category": "product",
+    "reviews": [{"author": "عميل", "text": "رائعة ومريحة للارتداء اليومي."}]
+  },
+  {
+    "slug": "prod-9",
+    "name": "Apple Watch Ultra 2",
+    "description": "ساعة مغامرات قوية من آبل، مقاومة للماء والغبار، مع شاشة ساطعة وهيكل Titanium.",
+    "price": 1999,
+    "old_price": 2199,
+    "currency": "درهم",
+    "image": "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/apple-watch-ultra-2",
+    "category": "product",
+    "reviews": [{"author": "عميل", "text": "متينة ومناسبة للأنشطة الخارجية."}]
+  },
+  {
+    "slug": "prod-10",
+    "name": "لوحة مفاتيح وماوس Logitech MX Mechanical Combo",
+    "description": "مجموعة إنتاجية مميزة تتضمن لوحة مفاتيح ميكانيكية وماوس احترافي MX Master 3S.",
+    "price": 899,
+    "old_price": 1099,
+    "currency": "درهم",
+    "image": "https://resource.logitech.com/content/dam/logitech/en/products/keyboards/mx-mechanical/gallery/mx-mechanical-top-view-graphite-gallery-1.png",
+    "category": "product",
+    "reviews": [{"author": "عميل", "text": "ممتازة للاستخدام المكتبي الطويل."}]
+  }
+]

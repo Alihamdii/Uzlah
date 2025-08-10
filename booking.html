@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>الحجز - متجر عُزلة</title><link rel="stylesheet" href="assets/style.css"></head>
+<body>
+<header class="site-header"><h1>متجر عُزلة</h1><nav class="main-nav"><a href="index.html">الرئيسية</a></nav></header>
+<main class="section">
+  <h2>احجز جلسة استشارية / خدمة</h2>
+  <form id="booking-form" class="review-card">
+    <label>الاسم: <input name="name" required></label><br>
+    <label>البريد الإلكتروني: <input name="email" type="email" required></label><br>
+    <label>الخدمة: 
+      <select name="service">
+        <option>جلسة استشارية</option>
+        <option>توصيل VIP</option>
+        <option>تركيب أجهزة</option>
+      </select>
+    </label><br>
+    <label>التاريخ: <input name="date" type="date" required></label><br>
+    <label>الوقت: <input name="time" type="time" required></label><br>
+    <button type="submit" class="btn">احجز الآن</button>
+  </form>
+  <div id="bookings-list"></div>
+</main>
+<footer class="site-footer"><p>© 2025 متجر عُزلة</p></footer>
+<script src="assets/store.js"></script>
+<script>
+document.getElementById('booking-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const form = e.target;
+  const data = {name: form.name.value, email: form.email.value, service: form.service.value, date: form.date.value, time: form.time.value, id: Date.now()};
+  let bookings = JSON.parse(localStorage.getItem('ozluh_bookings')||'[]');
+  bookings.push(data);
+  localStorage.setItem('ozluh_bookings', JSON.stringify(bookings));
+  alert('تم الحجز بنجاح');
+  renderBookings();
+  form.reset();
+});
+function renderBookings(){
+  const list = document.getElementById('bookings-list');
+  const bookings = JSON.parse(localStorage.getItem('ozluh_bookings')||'[]');
+  if(bookings.length===0){ list.innerHTML='<p>لا يوجد حجوزات.</p>'; return; }
+  list.innerHTML = bookings.map(b=>`<div class="review-card"><strong>${b.name}</strong> - ${b.service} - ${b.date} ${b.time}</div>`).join('');
+}
+renderBookings();
+</script>
+</body>
+</html>
