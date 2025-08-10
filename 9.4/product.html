@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تفاصيل المنتج - متجر عُزلة</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>متجر عُزلة</h1>
+    <nav class="main-nav">
+      <a href="index.html">الرئيسية</a>
+      <a href="checkout.html">سلة الشراء</a>
+    </nav>
+  </header>
+
+  <main class="section">
+    <div id="product-detail" class="product-detail"></div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 متجر عُزلة</p>
+  </footer>
+
+<script src="assets/store.js"></script>
+<script>
+function getParam(name) {
+  const url = new URL(window.location.href);
+  return url.searchParams.get(name);
+}
+
+async function showProduct() {
+  const slug = getParam('slug');
+  if (!slug) {
+    document.getElementById('product-detail').innerHTML = '<p>لم يتم تحديد منتج.</p>';
+    return;
+  }
+  try {
+    const res = await fetch('data/products.json');
+    const products = await res.json();
+    const p = products.find(x => x.slug === slug);
+    const container = document.getElementById('product-detail');
+    if (!p) {
+      container.innerHTML = '<p>المنتج غير موجود.</p>';
+      return;
+    }
+    container.innerHTML = `
+      <div class="product-detail-card">
+        <div class="gallery">
+          <img class="main-img" src="${p.image}" alt="${p.name}">
+        </div>
+        <div class="detail-info">
+          <h2>${p.name}</h2>
+          <p class="price"><span class="new">${p.price} ${p.currency}</span> ${p.old_price ? `<span class="old">${p.old_price} ${p.currency}</span>` : ''}</p>
+          <p class="desc">${p.description}</p>
+          <div class="meta"><strong>الفئة:</strong> ${p.category} &nbsp; • &nbsp; <strong>الرمز:</strong> ${p.slug}</div>
+          <label>الكمية: <input id="qty" type="number" value="1" min="1"></label>
+          <button id="add">أضف للعربة</button>
+
+          <h3>مراجعات العملاء</h3>
+          <div id="product-reviews"></div>
+        </div>
+      </div>
+    `;
+    const reviewsContainer = document.getElementById('product-reviews');
+    (p.reviews || []).forEach(r => {
+      const rc = document.createElement('div');
+      rc.className = 'review-card small';
+      rc.innerHTML = `<p>“${r.text}”</p><span>- ${r.author}</span>`;
+      reviewsContainer.appendChild(rc);
+    });
+    document.getElementById('add').addEventListener('click', () => {
+      const qty = parseInt(document.getElementById('qty').value||1);
+      addToCart(p.slug, qty);
+      alert(`تمت إضافة ${qty} من ${p.name} إلى سلة الشراء.`);
+      window.location.href = 'checkout.html';
+    });
+  } catch (err) {
+    document.getElementById('product-detail').innerHTML = '<p>حدث خطأ في تحميل المنتج.</p>';
+    console.error(err);
+  }
+}
+
+showProduct();
+</script>
+</body>
+</html>

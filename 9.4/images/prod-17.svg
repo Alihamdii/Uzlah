@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#eef7f3"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#g)"/>
+  <rect x="40" y="40" width="1120" height="600" rx="20" fill="#f0f6f4" stroke="#dfeee6" stroke-width="2"/>
+  <text x="50%" y="420" font-family="Tahoma, Arial" font-size="36" text-anchor="middle" fill="#224a3f">حاملة كتب مكتبية</text>
+  <text x="50%" y="480" font-family="Tahoma, Arial" font-size="22" text-anchor="middle" fill="#557a6c">إلكترونيات وراحة شخصية</text>
+  <rect x="200" y="560" width="800" height="120" rx="12" fill="#ffffff" opacity="0.9"/>
+  <text x="50%" y="630" font-family="Tahoma, Arial" font-size="18" text-anchor="middle" fill="#7a8f88">متجر عُزلة — صورة توضيحية</text>
+</svg>
